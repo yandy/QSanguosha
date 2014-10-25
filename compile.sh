@@ -33,7 +33,9 @@ sh swig/swig.sh
 
 # second, we create the Makefile from project file
 echo "Generating Makefile using project file"
-qmake QSanguosha.pro
+mkdir build
+cd build
+qmake ..
 
 # then do make
 echo "Compile it"
@@ -43,6 +45,6 @@ if ! make ; then
 fi
 
 # Compile the translation file
-lrelease QSanguosha.pro
+lrelease "$OLDPWD/QSanguosha.pro"
 
 echo "Well, everything is OK. You can run it with ./QSanguosha"

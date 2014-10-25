@@ -9,8 +9,8 @@ if [[ $1 == "-help" || $1 == "-h" ]]; then
     exit 0
 fi
 
-SRC_DIR="$HOME/Projects/QSanguosha"
-BUILD_DIR="$HOME/Projects/QSanguosha-build-desktop"
+SRC_DIR="$(pwd)/.."
+BUILD_DIR="$SRC_DIR/build"
 
 cd $BUILD_DIR
 
@@ -21,7 +21,6 @@ fi
 
 # use here document to store items that should be copied
 items=`cat<<EOF
-acknowledgement 
 audio
 backdrop
 diy
@@ -53,6 +52,7 @@ echo "Call macdeployqt"
 macdeployqt QSanguosha.app
 
 echo "Call install_name_tool"
+cp "$SRC_DIR/libfmodex.dylib" "$BUILD_DIR/QSanguosha.app/Contents/Frameworks"
 install_name_tool  -change ./libfmodex.dylib @executable_path/../Frameworks/libfmodex.dylib QSanguosha.app/Contents/MacOS/QSanguosha
 
 if [[ $1 == "-dmg" ]]; then
@@ -61,6 +61,4 @@ if [[ $1 == "-dmg" ]]; then
 fi
 
 echo "Finished"
-
-
 
